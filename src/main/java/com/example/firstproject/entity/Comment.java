@@ -33,9 +33,29 @@ public class Comment {
         // 예외 처리
         if(dto.getId() != null)
             throw new IllegalStateException("댓글 생성 실패! id 가 없어야합니다");
-        // 엔티티 생성 및 반환
+
         if(dto.getArticleId() != article.getId())
             throw new IllegalStateException("댓글 생성 실패! 게시글의 id가 잘못되었습니다!");
-        return null;
+
+        // 엔티티 생성 및 반환
+        return new Comment(
+                dto.getId(),
+                article,
+                dto.getNickname(),
+                dto.getBody()
+        );
+    }
+
+    public void patch(CommentDto dto) {
+        // 예외 발생
+        if(this.id != dto.getId())
+            throw new IllegalStateException("댓글 수정 실패! 잘못된 id가 입력되었습니다.");
+        // 객체를 갱신(예외발생하지않았다면)
+        if(dto.getNickname() != null){
+            this.nickname = dto.getNickname();
+        }
+        if(dto.getBody() != null){
+            this.body = dto.getBody();
+        }
     }
 }
